@@ -1,0 +1,6 @@
+traffic_light_processing.c:16:6:traffic_init	8	static
+traffic_light_processing.c:24:6:updateTempTime	4	static
+traffic_light_processing.c:47:6:confirmAdjustedTime	8	static
+traffic_light_processing.c:70:6:resetToTheDefaultSetting	8	static
+traffic_light_processing.c:85:6:normal_running_traffic_light	8	static
+traffic_light_processing.c:159:6:traffic_light_processing	8	static
