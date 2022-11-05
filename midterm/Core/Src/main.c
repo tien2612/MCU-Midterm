@@ -28,7 +28,6 @@
 #include "stdio.h"
 #include "software_timer.h"
 #include "input_reading.h"
-#include "traffic_light_processing.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -97,8 +96,6 @@ int main(void)
   /* USER CODE BEGIN 2 */
   HAL_TIM_Base_Start_IT (&htim2);
   GPIOA->BRR=0xFF;
-  led_init();
-  traffic_init();
   setTimer1(2);
   setTimer2(DURATION_1S);
   setTimer3(DURATION_1S);
@@ -109,7 +106,6 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-	  traffic_light_processing();
 	  fsm_for_input_processing();
     /* USER CODE BEGIN 3 */
   }
@@ -210,7 +206,7 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, EN0_Pin|EN1_Pin|EN2_Pin|EN3_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, EN0_Pin|LED_RED_Pin|EN2_Pin|EN3_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOB, SEG0_Pin|SEG1_Pin|SEG2_Pin|D3_Pin
@@ -218,8 +214,8 @@ static void MX_GPIO_Init(void)
                           |SEG4_Pin|SEG5_Pin|SEG6_Pin|SEG7_Pin
                           |D1_Pin|D2_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pins : EN0_Pin EN1_Pin EN2_Pin EN3_Pin */
-  GPIO_InitStruct.Pin = EN0_Pin|EN1_Pin|EN2_Pin|EN3_Pin;
+  /*Configure GPIO pins : EN0_Pin LED_RED_Pin EN2_Pin EN3_Pin */
+  GPIO_InitStruct.Pin = EN0_Pin|LED_RED_Pin|EN2_Pin|EN3_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -238,8 +234,8 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : MODE_Pin ADD_Pin CONFIRM_Pin RESET_Pin */
-  GPIO_InitStruct.Pin = MODE_Pin|ADD_Pin|CONFIRM_Pin|RESET_Pin;
+  /*Configure GPIO pins : INC_Pin DEC_Pin RESET_Pin */
+  GPIO_InitStruct.Pin = INC_Pin|DEC_Pin|RESET_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
