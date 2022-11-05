@@ -14,7 +14,7 @@
 enum ButtonState{
 	BUTTON_RELEASED,
 	BUTTON_PRESSED,
-	BUTTON_PRESS_MORE_THAN_1S
+	BUTTON_PRESS_MORE_THAN_3S
 };
 
 enum ButtonState buttonState = BUTTON_RELEASED;
@@ -27,7 +27,7 @@ int WhichButtonIsPressed() {
 	return 0; // None of these buttons are pressed
 }
 
-int WhichButtonIsPressed1s() {
+int WhichButtonIsPressed3s() {
 	if (is_button_pressed_3s(0)) return button_inc_is_pressed_3s;
 	if (is_button_pressed_3s(1)) return button_dec_is_pressed_3s;
 
@@ -65,7 +65,7 @@ void fsm_mode_running() {
 }
 
 void fsm_mode_running_for_pressed_3s() {
-	switch(WhichButtonIsPressed1s()) {
+	switch(WhichButtonIsPressed3s()) {
 		// INC BUTTON
 		case button_inc_is_pressed_3s:
 			// Increasing counter
@@ -98,7 +98,7 @@ void fsm_for_input_processing() {
 			AllowToExecuteAfterASecondPressed = 0;
 			if (flagForFirstButtonIsReleased == 1) {
 				flagForFirstButtonIsReleased = 0;
-				setTimer1(3000);
+				setTimer1(DURATION_FOR_AUTO_DECREASING);
 			}
 
 			if (timer1_flag == 1) {
@@ -125,11 +125,11 @@ void fsm_for_input_processing() {
 				for (int i = 0; i < N0_OF_BUTTONS - 1; i++) {
 					flagForFirstButtonIsReleased = 1;
 					if (is_button_pressed_3s(i))
-						buttonState = BUTTON_PRESS_MORE_THAN_1S;
+						buttonState = BUTTON_PRESS_MORE_THAN_3S;
 				}
 			}
 			break;
-		case BUTTON_PRESS_MORE_THAN_1S:
+		case BUTTON_PRESS_MORE_THAN_3S:
 			//firstLongPressButton = 0;
 			if (!WhichButtonIsPressed()) {
 				buttonState = BUTTON_RELEASED;
@@ -140,7 +140,6 @@ void fsm_for_input_processing() {
 			for (int i = 0; i < N0_OF_BUTTONS; i++) {
 				clearTimer1();
 				clearTimer2();
-				//firstLongPressButton[i] = 0;
 				if (is_button_pressed_1s_while_holding(i)) {
 					fsm_mode_running_for_pressed_3s();
 					flagForButtonPress1sWhileHolding[i] = 0;

@@ -14,4 +14,5 @@ void fsm_mode_running(void);
 void fsm_mode_running_for_pressed_1s(void);
 void normal_running_traffic_light(void);
 int WhichButtonIsPressed();
+int WhichButtonIsPressed3s();
 #endif /* INC_INPUT_PROCESSING_H_ */
