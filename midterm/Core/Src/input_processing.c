@@ -47,11 +47,10 @@ void fsm_mode_running() {
 		// DEC BUTTON
 		case button_dec_is_pressed:
 			// Decreasing counter
-//			if (counter <= 0) counter = 9;
-//			else counter--;
 			counter--;
 			counter += 10;
 			counter %= 10;
+
 			display7SEG(counter);
 			break;
 		// RESET BUTTON
@@ -78,8 +77,6 @@ void fsm_mode_running_for_pressed_3s() {
 		// DEC BUTTON
 		case button_dec_is_pressed_3s:
 			// Decreasing counter
-//			if (counter <= 0) counter = 9;
-//			else counter--;
 			counter--;
 			counter += 10;
 			counter %= 10;
@@ -98,7 +95,7 @@ void fsm_for_input_processing() {
 			AllowToExecuteAfterASecondPressed = 0;
 			if (flagForFirstButtonIsReleased == 1) {
 				flagForFirstButtonIsReleased = 0;
-				setTimer1(3000);
+				setTimer1(DURATION_FOR_AUTO_DECREASING);
 			}
 
 			if (timer1_flag == 1) {

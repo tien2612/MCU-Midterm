@@ -100,7 +100,6 @@ int main(void)
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
   HAL_TIM_Base_Start_IT (&htim2);
-  GPIOA->BRR=0xFF;
   setTimer1(10);
   setTimer2(20);
   setTimer3(30);
