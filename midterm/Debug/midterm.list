@@ -77,7 +77,7 @@ Disassembly of section .text:
  8000148:	08002cb8 	.word	0x08002cb8
 
 0800014c <WhichButtonIsPressed>:
-	BUTTON_PRESS_MORE_THAN_1S
+	BUTTON_PRESS_MORE_THAN_3S
 };
 
 enum ButtonState buttonState = BUTTON_RELEASED;
@@ -116,9 +116,9 @@ int WhichButtonIsPressed() {
  8000182:	4618      	mov	r0, r3
  8000184:	bd80      	pop	{r7, pc}
 
-08000186 <WhichButtonIsPressed1s>:
+08000186 <WhichButtonIsPressed3s>:
 
-int WhichButtonIsPressed1s() {
+int WhichButtonIsPressed3s() {
  8000186:	b580      	push	{r7, lr}
  8000188:	af00      	add	r7, sp, #0
 	if (is_button_pressed_3s(0)) return button_inc_is_pressed_3s;
@@ -126,17 +126,17 @@ int WhichButtonIsPressed1s() {
  800018c:	f000 fa20 	bl	80005d0 <is_button_pressed_3s>
  8000190:	4603      	mov	r3, r0
  8000192:	2b00      	cmp	r3, #0
- 8000194:	d001      	beq.n	800019a <WhichButtonIsPressed1s+0x14>
+ 8000194:	d001      	beq.n	800019a <WhichButtonIsPressed3s+0x14>
  8000196:	230e      	movs	r3, #14
- 8000198:	e008      	b.n	80001ac <WhichButtonIsPressed1s+0x26>
+ 8000198:	e008      	b.n	80001ac <WhichButtonIsPressed3s+0x26>
 	if (is_button_pressed_3s(1)) return button_dec_is_pressed_3s;
  800019a:	2001      	movs	r0, #1
  800019c:	f000 fa18 	bl	80005d0 <is_button_pressed_3s>
  80001a0:	4603      	mov	r3, r0
  80001a2:	2b00      	cmp	r3, #0
- 80001a4:	d001      	beq.n	80001aa <WhichButtonIsPressed1s+0x24>
+ 80001a4:	d001      	beq.n	80001aa <WhichButtonIsPressed3s+0x24>
  80001a6:	230f      	movs	r3, #15
- 80001a8:	e000      	b.n	80001ac <WhichButtonIsPressed1s+0x26>
+ 80001a8:	e000      	b.n	80001ac <WhichButtonIsPressed3s+0x26>
 
 	return 0; // None of these buttons are pressed
  80001aa:	2300      	movs	r3, #0
@@ -255,8 +255,8 @@ void fsm_mode_running() {
 void fsm_mode_running_for_pressed_3s() {
  8000260:	b580      	push	{r7, lr}
  8000262:	af00      	add	r7, sp, #0
-	switch(WhichButtonIsPressed1s()) {
- 8000264:	f7ff ff8f 	bl	8000186 <WhichButtonIsPressed1s>
+	switch(WhichButtonIsPressed3s()) {
+ 8000264:	f7ff ff8f 	bl	8000186 <WhichButtonIsPressed3s>
  8000268:	4603      	mov	r3, r0
  800026a:	2b0e      	cmp	r3, #14
  800026c:	d002      	beq.n	8000274 <fsm_mode_running_for_pressed_3s+0x14>
@@ -456,7 +456,7 @@ void fsm_for_input_processing() {
  80003b4:	4603      	mov	r3, r0
  80003b6:	2b00      	cmp	r3, #0
  80003b8:	d002      	beq.n	80003c0 <fsm_for_input_processing+0xcc>
-						buttonState = BUTTON_PRESS_MORE_THAN_1S;
+						buttonState = BUTTON_PRESS_MORE_THAN_3S;
  80003ba:	4b1e      	ldr	r3, [pc, #120]	; (8000434 <fsm_for_input_processing+0x140>)
  80003bc:	2202      	movs	r2, #2
  80003be:	701a      	strb	r2, [r3, #0]

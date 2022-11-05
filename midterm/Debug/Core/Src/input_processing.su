@@ -1,5 +1,5 @@
 input_processing.c:22:5:WhichButtonIsPressed	8	static
-input_processing.c:30:5:WhichButtonIsPressed1s	8	static
+input_processing.c:30:5:WhichButtonIsPressed3s	8	static
 input_processing.c:37:6:fsm_mode_running	8	static
 input_processing.c:67:6:fsm_mode_running_for_pressed_3s	8	static
 input_processing.c:94:6:fsm_for_input_processing	16	static
