@@ -78,3 +78,8 @@ void clearTimer1() {
 	timer1_counter = 0;
 	timer1_flag = 0;
 }
+
+void clearTimer2() {
+	timer2_counter = 0;
+	timer2_flag = 0;
+}
