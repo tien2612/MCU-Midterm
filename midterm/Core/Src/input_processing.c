@@ -178,7 +178,7 @@ void fsm_for_input_processing() {
 			for (int i = 0; i < N0_OF_BUTTONS; i++) {
 				//firstLongPressButton[i] = 0;
 				if (is_button_pressed_1s_while_holding(i)) {
-					fsm_mode_running_for_pressed_1s();
+					//fsm_mode_running_for_pressed_1s();
 					flagForButtonPress1sWhileHolding[i] = 0;
 				}
 			}
