@@ -101,9 +101,9 @@ int main(void)
   /* USER CODE BEGIN 2 */
   HAL_TIM_Base_Start_IT (&htim2);
   GPIOA->BRR=0xFF;
-  setTimer1(2);
-  setTimer2(DURATION_1S);
-  setTimer3(DURATION_1S);
+  setTimer1(10);
+  setTimer2(20);
+  setTimer3(30);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -113,6 +113,10 @@ int main(void)
 	/* USER CODE END WHILE */
 
 	/* USER CODE BEGIN 3 */
+	if (timer3_flag == 1) {
+		HAL_GPIO_TogglePin(GPIOA, LED_RED_Pin);
+		setTimer3(DURATION_1S);
+	}
 	fsm_for_input_processing();
 
   }

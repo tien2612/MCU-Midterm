@@ -98,7 +98,7 @@ void fsm_for_input_processing() {
 			AllowToExecuteAfterASecondPressed = 0;
 			if (flagForFirstButtonIsReleased == 1) {
 				flagForFirstButtonIsReleased = 0;
-				setTimer1(DURATION_FOR_AUTO_DECREASING);
+				setTimer1(3000);
 			}
 
 			if (timer1_flag == 1) {
