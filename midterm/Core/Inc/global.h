@@ -22,15 +22,13 @@
 #define MAN_GREEN_MODE						7
 #define CONFIRM_STATE						8
 
-#define button_mode_is_pressed				10
-#define button_add_is_pressed				11
-#define button_confirm_is_pressed			12
-#define button_reset_is_pressed				13
+#define button_inc_is_pressed				10
+#define button_dec_is_pressed				11
+#define button_reset_is_pressed				12
 
-#define button_mode_is_pressed_1s			14
-#define button_add_is_pressed_1s			15
-#define button_confirm_is_pressed_1s		16
-#define button_reset_is_pressed_1s			17
+#define button_inc_is_pressed_1s			14
+#define button_dec_is_pressed_1s			15
+#define button_reset_is_pressed_1s			16
 
 #define INIT_TRAFFIC_LIGHT					19			// Initital state for traffic light 2-way
 #define RED_GREEN							20			// RED 1 ON - GREEN 2 ON
@@ -47,11 +45,10 @@ extern int man_amber_time;
 extern int temp_value;
 
 extern int led_status;
-extern int light_time;
-extern int light_time1;
+extern int counter;
 extern int status;	// 4 modes of traffic light such as: mode MODE, ADD, CONFIRM and RESET
 extern int index_led;
 
-extern int flagForButtonPressOneQuarterSecond[4];
+extern int flagForButtonPress1sWhileHolding[3];
 extern int AllowToExecuteAfterASecondPressed;
 #endif /* INC_GLOBAL_H_ */

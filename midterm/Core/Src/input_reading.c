@@ -11,26 +11,24 @@
 #include "global.h"
 
 //#include "7SEG.h"
-// timer interrupt duration is 10ms , so to pass 1 second ,
-// we need to jump to the interrupt service routine 100 time
-#define DURATION_FOR_AUTO_INCREASING 			100
-#define	DURATION_FOR_AUTO_RUNNING_MODE		  	25
-#define	DURATION_FOR_DEBOUNDING 				5
+// timer interrupt duration is 10ms , so to pass 3 second ,
+// we need to jump to the interrupt service routine 300 time
+#define DURATION_FOR_PRESS_3S 					300
+#define	DURATION_FOR_AUTO_INCREASING_COUNTER	100
+
 #define BUTTON_IS_PRESSED GPIO_PIN_RESET
 #define BUTTON_IS_RELEASED GPIO_PIN_SET
 // FSM state for input processing
 // the buffer that the final result is stored after debouncing
 static GPIO_TypeDef *buttonPort[N0_OF_BUTTONS] = {
-		MODE_GPIO_Port,
-		ADD_GPIO_Port,
-		CONFIRM_GPIO_Port,
+		INC_GPIO_Port,
+		DEC_GPIO_Port,
 		RESET_GPIO_Port
 };
 
 static uint16_t buttonPin[N0_OF_BUTTONS] = {
-		MODE_Pin,
-		ADD_Pin,
-		CONFIRM_Pin,
+		INC_Pin,
+		DEC_Pin,
 		RESET_Pin
 };
 
@@ -40,11 +38,11 @@ static GPIO_PinState buttonBuffer[N0_OF_BUTTONS];
 static GPIO_PinState debounceButtonBuffer1[N0_OF_BUTTONS];
 static GPIO_PinState debounceButtonBuffer2[N0_OF_BUTTONS];
 // we define a flag for a button pressed more than 1 second .
-static uint8_t flagForButtonPress1s[N0_OF_BUTTONS];
+static uint8_t flagForButtonPress3s[N0_OF_BUTTONS];
 // we define counter for automatically increasing the value
 // after the button is pressed more than 1 second .
-static uint16_t counterForButtonPress1s[N0_OF_BUTTONS];
-static uint16_t counterForButtonPressOneQuarterSecond[N0_OF_BUTTONS];
+static uint16_t counterForButtonPress3s[N0_OF_BUTTONS];
+static uint16_t counterForButtonPress1sWhileHolding[N0_OF_BUTTONS];
 
 void button_reading(void) {
 	for (int i = 0; i < N0_OF_BUTTONS; i++) {
@@ -55,28 +53,28 @@ void button_reading(void) {
 			//valid input, can read now
 			buttonBuffer[i] = debounceButtonBuffer1[i];
 			if (buttonBuffer[i] == BUTTON_IS_PRESSED) {
-				if ((counterForButtonPressOneQuarterSecond[i] < DURATION_FOR_AUTO_RUNNING_MODE)
+				if ((counterForButtonPress1sWhileHolding[i] < DURATION_FOR_AUTO_INCREASING_COUNTER)
 						&& AllowToExecuteAfterASecondPressed)
 				{
-					counterForButtonPressOneQuarterSecond[i]++;
+					counterForButtonPress1sWhileHolding[i]++;
 				} else {
-					counterForButtonPressOneQuarterSecond[i] = 0;
-					flagForButtonPressOneQuarterSecond[i] = 1;
+					counterForButtonPress1sWhileHolding[i] = 0;
+					flagForButtonPress1sWhileHolding[i] = 1;
 				}
-				if(counterForButtonPress1s[i] < DURATION_FOR_AUTO_INCREASING) {
-					counterForButtonPress1s[i]++;
+				if(counterForButtonPress3s[i] < DURATION_FOR_PRESS_3S) {
+					counterForButtonPress3s[i]++;
 				} else {
 					// the flag is turned on when 1 second has passed
 					// since the button is pressed .
-					flagForButtonPress1s[i] = 1;
+					flagForButtonPress3s[i] = 1;
 				}
 			}
 
 			else {
-				counterForButtonPress1s[i] = 0;
-				counterForButtonPressOneQuarterSecond[i] = 0;
-				flagForButtonPress1s[i] = 0;
-				flagForButtonPressOneQuarterSecond[i] = 0;
+				counterForButtonPress3s[i] = 0;
+				counterForButtonPress1sWhileHolding[i] = 0;
+				flagForButtonPress3s[i] = 0;
+				flagForButtonPress1sWhileHolding[i] = 0;
 			}
 		}
 	}
@@ -88,12 +86,12 @@ unsigned char is_button_pressed(uint8_t index) {
 }
 
 // Check for button is pressed more than a second or not
-unsigned char is_button_pressed_1s (unsigned char index ) {
+unsigned char is_button_pressed_3s (unsigned char index ) {
 	if(index >= N0_OF_BUTTONS ) return 0xff ;
-	return (flagForButtonPress1s[index] == 1) ;
+	return (flagForButtonPress3s[index] == 1) ;
 }
 
-unsigned char is_button_pressed_one_quarter_second(unsigned char index) {
+unsigned char is_button_pressed_1s_while_holding(unsigned char index) {
 	if(index >= N0_OF_BUTTONS) return 0xff ;
-	return (flagForButtonPressOneQuarterSecond[index] == 1) ;
+	return (flagForButtonPress1sWhileHolding[index] == 1) ;
 }
