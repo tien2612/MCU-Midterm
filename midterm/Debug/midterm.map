@@ -2709,9 +2709,9 @@ LOAD c:/st/stm32cubeide_1.7.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.exte
  .text.WhichButtonIsPressed
                 0x000000000800014c       0x3a ./Core/Src/input_processing.o
                 0x000000000800014c                WhichButtonIsPressed
- .text.WhichButtonIsPressed1s
+ .text.WhichButtonIsPressed3s
                 0x0000000008000186       0x2a ./Core/Src/input_processing.o
-                0x0000000008000186                WhichButtonIsPressed1s
+                0x0000000008000186                WhichButtonIsPressed3s
  .text.fsm_mode_running
                 0x00000000080001b0       0x84 ./Core/Src/input_processing.o
                 0x00000000080001b0                fsm_mode_running
